@@ -10,4 +10,7 @@ OPEN CHROME ---> OPEN ANY SONG YOU WANT TO DOWNLOAD ---> PRESS F12 ----> GO TO N
 installaiton Guide
 
 pip3 -r requirment.txt
+
+
+
 python3 scdownload.py https://soundcloud.com/morethanrecs/twenty-one-pilots-ride-jaydon-lewis-remix
