@@ -17,8 +17,8 @@ API = "https://api.soundcloud.com/i1/tracks/{0}/streams?client_id={1}"
 
 headers = {
     'User-Agent':
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) '
-        'Gecko/20100101 Firefox/55.0'
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 12.12; rv:52.0) '
+        'Gecko/20545245 Firefox/57.2'
 }
 
 def get_id(html):
@@ -29,7 +29,7 @@ def get_id(html):
         song_id = re.findall('soundcloud://sounds:(.*?)"', html)[0]
         return song_id
     except IndexError:
-        print("\033[91m✘ Could not find song ID\033[0m")
+        print("Could not find song ID")
         sys.exit()
 
 
@@ -82,7 +82,7 @@ def tag(fname, title, artist, genre, arturl):
     imagename = str(title.replace("/", "\\")+"500x500.jpg")
 
     image = urllib.request.urlretrieve(arturl, imagename)
-    print("\033[92m✔ Album art downloaded\033[0m")
+    print("Album art downloaded")
 
     imagedata = open(imagename, "rb").read()
 
@@ -102,7 +102,7 @@ def main():
     args = parser.parse_args()
 
     r = requests.get(args.url, headers=headers)
-    print("\033[92m✔ Fetched needed data\033[0m")
+    print(" Fetched needed data")
 
     html = r.text
 
@@ -113,10 +113,7 @@ def main():
     arturl = get_album_art_url(html)
 
     json_url = API.format(song_id, CLIENTID)
-
-    #data = requests.get(json_url, headers=headers)
     data = urllib.request.urlopen(json_url).read().decode('UTF-8')
-    #data = data.decode('utf-8').replace('\0', '')
     data = json.loads(data)
 
     # Getting the file url with the best quality
@@ -126,12 +123,12 @@ def main():
     fname = str(artist+" - "+title.replace("/", "")+".mp3")
 
     urllib.request.urlretrieve(file_url, fname)
-    print("\033[92m✔ Downloaded:\033[0m {0} by {1}".format(title, artist))
+    print("✔ Downloaded:\[0m {0} by {1}".format(title, artist))
 
     # Making the file beautiful
     tag(fname, title, artist, genre, arturl)
 
-    print("\033[92m✔ Saved:\033[0m {}".format(fname))
+    print("[92m✔ Saved:[0m {}".format(fname))
 
 
 if __name__ == "__main__":
